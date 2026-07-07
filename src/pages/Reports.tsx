@@ -134,7 +134,7 @@ export default function Reports() {
                     fill={colors[index % colors.length]}
                   />
                 ))}
-              </Pie>s
+              </Pie>
 
               <Tooltip />
 
