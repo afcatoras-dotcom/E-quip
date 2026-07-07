@@ -129,13 +129,12 @@ export default function Reports() {
                 outerRadius={100}
                 label
               >
-                {pieData.map((entry, index) => (
-                  <Cell
+                    {pieData.map((_, index) => (                  <Cell
                     key={index}
                     fill={colors[index % colors.length]}
                   />
                 ))}
-              </Pie>
+              </Pie>s
 
               <Tooltip />
 

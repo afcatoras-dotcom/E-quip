@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -18,7 +19,7 @@ import MainLayout from "../layouts/MainLayout";
 function ProtectedRoute({
   children,
 }: {
-  children: JSX.Element;
+  children: ReactNode;
 }) {
   const user = localStorage.getItem("user");
 
@@ -26,16 +27,13 @@ function ProtectedRoute({
     return <Navigate to="/" replace />;
   }
 
-  return children;
+  return <>{children}</>;
 }
 
-// Maintenance and Reports are staff-only tools. Admin and Laboratory
-// Technician can manage equipment status; Faculty and Student should
-// never be able to reach these pages, even by typing the URL directly.
 function StaffRoute({
   children,
 }: {
-  children: JSX.Element;
+  children: ReactNode;
 }) {
   const user = localStorage.getItem("user");
 
@@ -45,19 +43,20 @@ function StaffRoute({
 
   const profile = JSON.parse(user);
 
-  if (profile.role !== "Admin" && profile.role !== "Laboratory Technician") {
+  if (
+    profile.role !== "Admin" &&
+    profile.role !== "Laboratory Technician"
+  ) {
     return <Navigate to="/dashboard" replace />;
   }
 
-  return children;
+  return <>{children}</>;
 }
 
 export default function AppRoutes() {
   return (
     <BrowserRouter>
-
       <Routes>
-
         <Route path="/" element={<Login />} />
 
         <Route
@@ -67,26 +66,13 @@ export default function AppRoutes() {
             </ProtectedRoute>
           }
         >
+          <Route path="/dashboard" element={<Dashboard />} />
 
-          <Route
-            path="/dashboard"
-            element={<Dashboard />}
-          />
+          <Route path="/equipment" element={<Equipment />} />
 
-          <Route
-            path="/equipment"
-            element={<Equipment />}
-          />
+          <Route path="/borrowing" element={<Borrowing />} />
 
-          <Route
-            path="/borrowing"
-            element={<Borrowing />}
-          />
-
-          <Route
-            path="/returns"
-            element={<Returns />}
-          />
+          <Route path="/returns" element={<Returns />} />
 
           <Route
             path="/maintenance"
@@ -105,16 +91,10 @@ export default function AppRoutes() {
               </StaffRoute>
             }
           />
-
         </Route>
 
-        <Route
-          path="*"
-          element={<Navigate to="/" replace />}
-        />
-
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-
     </BrowserRouter>
   );
 }
