@@ -239,15 +239,15 @@ export default function Borrowing() {
   return (
     <div>
 
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
 
         <div>
 
-          <h1 className="text-4xl font-bold">
+          <h1 className="text-2xl sm:text-4xl font-bold">
             Borrowing
           </h1>
 
-          <p className="text-gray-500 mt-2">
+          <p className="text-gray-500 mt-2 text-sm sm:text-base">
             Manage laboratory borrowing requests.
           </p>
 
@@ -255,18 +255,19 @@ export default function Borrowing() {
 
         <button
           onClick={openNewBorrowingModal}
-          className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-5 py-3 rounded-lg shadow-md transition"
+          className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-5 py-3 rounded-lg shadow-md transition self-start sm:self-auto"
         >
           + New Borrowing
         </button>
 
       </div>
-            {showModal && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
 
-          <div className="bg-white rounded-xl w-full max-w-2xl p-6">
+      {showModal && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
 
-            <h2 className="text-2xl font-bold mb-6">
+          <div className="bg-white rounded-xl w-full max-w-2xl p-5 sm:p-6 max-h-[90vh] overflow-y-auto">
+
+            <h2 className="text-xl sm:text-2xl font-bold mb-6">
               New Borrowing
             </h2>
 
@@ -386,7 +387,7 @@ export default function Borrowing() {
 
             </div>
 
-            <div className="flex justify-end gap-3 mt-6">
+            <div className="flex flex-col-reverse sm:flex-row justify-end gap-3 mt-6">
 
               <button
                 onClick={() => {
@@ -414,147 +415,149 @@ export default function Borrowing() {
 
       <div className="bg-white rounded-xl shadow overflow-hidden">
 
-        <table className="w-full">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[880px]">
 
-          <thead className="bg-slate-100">
-
-            <tr>
-
-              <th className="p-4 text-left">
-                Student
-              </th>
-
-              <th className="p-4 text-left">
-                Student ID
-              </th>
-
-              <th className="p-4 text-left">
-                Equipment
-              </th>
-
-              <th className="p-4 text-left">
-                Laboratory
-              </th>
-
-              <th className="p-4 text-left">
-                Quantity
-              </th>
-
-              <th className="p-4 text-left">
-                Borrow Date
-              </th>
-
-              <th className="p-4 text-left">
-                Return Date
-              </th>
-
-              <th className="p-4 text-left">
-                Status
-              </th>
-
-              <th className="p-4 text-center">
-                Action
-              </th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-
-                      {records.length === 0 ? (
+            <thead className="bg-slate-100">
 
               <tr>
 
-                <td
-                  colSpan={9}
-                  className="text-center py-10 text-gray-500"
-                >
-                  No borrowing records found.
-                </td>
+                <th className="p-4 text-left">
+                  Student
+                </th>
+
+                <th className="p-4 text-left">
+                  Student ID
+                </th>
+
+                <th className="p-4 text-left">
+                  Equipment
+                </th>
+
+                <th className="p-4 text-left">
+                  Laboratory
+                </th>
+
+                <th className="p-4 text-left">
+                  Quantity
+                </th>
+
+                <th className="p-4 text-left">
+                  Borrow Date
+                </th>
+
+                <th className="p-4 text-left">
+                  Return Date
+                </th>
+
+                <th className="p-4 text-left">
+                  Status
+                </th>
+
+                <th className="p-4 text-center">
+                  Action
+                </th>
 
               </tr>
 
-            ) : (
+            </thead>
 
-              records.map((record) => (
+            <tbody>
 
-                <tr
-                  key={record.id}
-                  className="border-t hover:bg-slate-50"
-                >
 
-                  <td className="p-4">
-                    {record.student_name}
-                  </td>
+              {records.length === 0 ? (
 
-                  <td className="p-4">
-                    {record.student_id}
-                  </td>
+                <tr>
 
-                  <td className="p-4">
-                    {record.equipment?.asset_id} - {record.equipment?.name}
-                  </td>
-
-                  <td className="p-4">
-                    {record.equipment?.laboratory}
-                  </td>
-
-                  <td className="p-4">
-                    {record.quantity}
-                  </td>
-
-                  <td className="p-4">
-                    {record.borrow_date}
-                  </td>
-
-                  <td className="p-4">
-                    {record.return_date}
-                  </td>
-
-                  <td className="p-4">
-
-                    <span
-                      className={`px-3 py-1 rounded-full text-sm font-semibold ${badge(record.status)}`}
-                    >
-                      {record.status}
-                    </span>
-
-                  </td>
-
-                  <td className="p-4 text-center">
-
-                    {record.status === "Borrowed" ? (
-
-                      <button
-                        onClick={() => returnEquipment(record)}
-                        className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-4 py-2 rounded-lg shadow-md"
-                      >
-                        Return
-                      </button>
-
-                    ) : (
-
-                      <span className="text-green-600 font-semibold">
-                        Completed
-                      </span>
-
-                    )}
-
+                  <td
+                    colSpan={9}
+                    className="text-center py-10 text-gray-500"
+                  >
+                    No borrowing records found.
                   </td>
 
                 </tr>
 
-              ))
+              ) : (
 
-            )}
+                records.map((record) => (
 
-          </tbody>
+                  <tr
+                    key={record.id}
+                    className="border-t hover:bg-slate-50"
+                  >
 
-        </table>
+                    <td className="p-4">
+                      {record.student_name}
+                    </td>
 
-       </div>
+                    <td className="p-4">
+                      {record.student_id}
+                    </td>
+
+                    <td className="p-4">
+                      {record.equipment?.asset_id} - {record.equipment?.name}
+                    </td>
+
+                    <td className="p-4">
+                      {record.equipment?.laboratory}
+                    </td>
+
+                    <td className="p-4">
+                      {record.quantity}
+                    </td>
+
+                    <td className="p-4">
+                      {record.borrow_date}
+                    </td>
+
+                    <td className="p-4">
+                      {record.return_date}
+                    </td>
+
+                    <td className="p-4">
+
+                      <span
+                        className={`px-3 py-1 rounded-full text-sm font-semibold ${badge(record.status)}`}
+                      >
+                        {record.status}
+                      </span>
+
+                    </td>
+
+                    <td className="p-4 text-center whitespace-nowrap">
+
+                      {record.status === "Borrowed" ? (
+
+                        <button
+                          onClick={() => returnEquipment(record)}
+                          className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-4 py-2 rounded-lg shadow-md"
+                        >
+                          Return
+                        </button>
+
+                      ) : (
+
+                        <span className="text-green-600 font-semibold">
+                          Completed
+                        </span>
+
+                      )}
+
+                    </td>
+
+                  </tr>
+
+                ))
+
+              )}
+
+            </tbody>
+
+          </table>
+        </div>
+
       </div>
+    </div>
   );
 }

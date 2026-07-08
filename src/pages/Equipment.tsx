@@ -19,8 +19,7 @@ export default function Equipment() {
   const storedUser = localStorage.getItem("user");
   const currentUser = storedUser ? JSON.parse(storedUser) : null;
   const canManageEquipment =
-    currentUser?.role === "Admin" ||
-    currentUser?.role === "Laboratory Technician";
+    currentUser?.role === "Admin" || currentUser?.role === "Laboratory Technician";
 
   const canReport =
     currentUser?.role === "Student" || currentUser?.role === "Faculty";
@@ -227,15 +226,15 @@ export default function Equipment() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
         <div>
-          <h1 className="text-4xl font-bold">Equipment Management</h1>
-          <p className="text-gray-500 mt-2">Laboratory</p>
+          <h1 className="text-2xl sm:text-4xl font-bold">Equipment Management</h1>
+          <p className="text-gray-500 mt-2 text-sm sm:text-base">Laboratory</p>
         </div>
         {canManageEquipment && selectedLab && (
           <button
             onClick={openAdd}
-            className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-5 py-3 rounded-lg hover:from-emerald-600 hover:to-emerald-700 shadow-md transition"
+            className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-5 py-3 rounded-lg hover:from-emerald-600 hover:to-emerald-700 shadow-md transition self-start sm:self-auto"
           >
             + Add Equipment
           </button>
@@ -246,20 +245,20 @@ export default function Equipment() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <button
             onClick={() => setSelectedLab("CPE")}
-            className="bg-white rounded-2xl shadow p-8 text-left hover:shadow-lg hover:-translate-y-0.5 transition-all"
+            className="bg-white rounded-2xl shadow p-6 sm:p-8 text-left hover:shadow-lg hover:-translate-y-0.5 transition-all"
           >
             <div className="bg-emerald-100 text-emerald-600 w-14 h-14 rounded-xl flex items-center justify-center mb-5">
               <Cpu size={28} />
             </div>
-            <h2 className="text-2xl font-bold text-slate-800">CpE Laboratory</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-800">CpE Laboratory</h2>
             <p className="text-gray-500 mt-2">Computer Engineering</p>
             <div className="flex gap-6 mt-6">
               <div>
-                <p className="text-3xl font-bold">{cpeCount}</p>
+                <p className="text-2xl sm:text-3xl font-bold">{cpeCount}</p>
                 <p className="text-gray-500 text-sm">Total Items</p>
               </div>
               <div>
-                <p className="text-3xl font-bold text-green-600">{cpeAvailable}</p>
+                <p className="text-2xl sm:text-3xl font-bold text-green-600">{cpeAvailable}</p>
                 <p className="text-gray-500 text-sm">Available</p>
               </div>
             </div>
@@ -267,20 +266,20 @@ export default function Equipment() {
 
           <button
             onClick={() => setSelectedLab("EE/ECE")}
-            className="bg-white rounded-2xl shadow p-8 text-left hover:shadow-lg hover:-translate-y-0.5 transition-all"
+            className="bg-white rounded-2xl shadow p-6 sm:p-8 text-left hover:shadow-lg hover:-translate-y-0.5 transition-all"
           >
             <div className="bg-blue-100 text-blue-600 w-14 h-14 rounded-xl flex items-center justify-center mb-5">
               <Zap size={28} />
             </div>
-            <h2 className="text-2xl font-bold text-slate-800">EE / ECE Laboratory</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-800">EE / ECE Laboratory</h2>
             <p className="text-gray-500 mt-2">Electrical / Electronics Engineering</p>
             <div className="flex gap-6 mt-6">
               <div>
-                <p className="text-3xl font-bold">{eeCount}</p>
+                <p className="text-2xl sm:text-3xl font-bold">{eeCount}</p>
                 <p className="text-gray-500 text-sm">Total Items</p>
               </div>
               <div>
-                <p className="text-3xl font-bold text-green-600">{eeAvailable}</p>
+                <p className="text-2xl sm:text-3xl font-bold text-green-600">{eeAvailable}</p>
                 <p className="text-gray-500 text-sm">Available</p>
               </div>
             </div>
@@ -299,13 +298,13 @@ export default function Equipment() {
             Back to Labs
           </button>
 
-          <div className="bg-white rounded-xl shadow p-5 mb-6">
-            <div className="flex items-center justify-between flex-wrap gap-4">
-              <h2 className="text-xl font-bold text-slate-800">
+          <div className="bg-white rounded-xl shadow p-4 sm:p-5 mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <h2 className="text-lg sm:text-xl font-bold text-slate-800">
                 {selectedLab === "CPE" ? "CpE Laboratory" : "EE / ECE Laboratory"}
               </h2>
               <input
-                className="border rounded-lg px-4 py-2 w-80"
+                className="border rounded-lg px-4 py-2 w-full sm:w-80"
                 placeholder="Search Equipment..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -314,75 +313,77 @@ export default function Equipment() {
           </div>
 
           <div className="bg-white rounded-xl shadow overflow-hidden">
-            <table className="w-full">
-              <thead className="bg-slate-100">
-                <tr>
-                  <th className="p-4 text-left">Asset ID</th>
-                  <th className="p-4 text-left">Equipment</th>
-                  <th className="p-4 text-left">Category</th>
-                  <th className="p-4 text-left">Laboratory</th>
-                  <th className="p-4 text-left">Condition</th>
-                  <th className="p-4 text-left">Status</th>
-                  {(canManageEquipment || canReport) && (
-                    <th className="p-4 text-center">Action</th>
-                  )}
-                </tr>
-              </thead>
-              <tbody>
-                {filtered.map((item) => {
-                  const originalIndex = equipment.findIndex((e) => e.id === item.id);
-                  return (
-                    <tr key={item.id} className="border-t hover:bg-slate-50">
-                      <td className="p-4">{item.id}</td>
-                      <td className="p-4 font-medium">{item.name}</td>
-                      <td className="p-4">{item.category}</td>
-                      <td className="p-4">{item.laboratory}</td>
-                      <td className="p-4">{item.condition}</td>
-                      <td className="p-4">
-                        <span className={`px-3 py-1 rounded-full text-sm ${badge(item.status)}`}>
-                          {item.status}
-                        </span>
-                      </td>
-                      {canManageEquipment && (
-                        <td className="p-4 text-center space-x-2">
-                          <button
-                            onClick={() => openEdit(originalIndex)}
-                            className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
-                          >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => deleteEquipment(originalIndex)}
-                            className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
-                          >
-                            Delete
-                          </button>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[720px]">
+                <thead className="bg-slate-100">
+                  <tr>
+                    <th className="p-4 text-left">Asset ID</th>
+                    <th className="p-4 text-left">Equipment</th>
+                    <th className="p-4 text-left">Category</th>
+                    <th className="p-4 text-left">Laboratory</th>
+                    <th className="p-4 text-left">Condition</th>
+                    <th className="p-4 text-left">Status</th>
+                    {(canManageEquipment || canReport) && (
+                      <th className="p-4 text-center">Action</th>
+                    )}
+                  </tr>
+                </thead>
+                <tbody>
+                  {filtered.map((item) => {
+                    const originalIndex = equipment.findIndex((e) => e.id === item.id);
+                    return (
+                      <tr key={item.id} className="border-t hover:bg-slate-50">
+                        <td className="p-4">{item.id}</td>
+                        <td className="p-4 font-medium">{item.name}</td>
+                        <td className="p-4">{item.category}</td>
+                        <td className="p-4">{item.laboratory}</td>
+                        <td className="p-4">{item.condition}</td>
+                        <td className="p-4">
+                          <span className={`px-3 py-1 rounded-full text-sm ${badge(item.status)}`}>
+                            {item.status}
+                          </span>
                         </td>
-                      )}
-                      {canReport && (
-                        <td className="p-4 text-center">
-                          <button
-                            onClick={() => openReport(item)}
-                            className="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1 rounded transition"
-                          >
-                            Report Damage
-                          </button>
-                        </td>
-                      )}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                        {canManageEquipment && (
+                          <td className="p-4 text-center space-x-2 whitespace-nowrap">
+                            <button
+                              onClick={() => openEdit(originalIndex)}
+                              className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => deleteEquipment(originalIndex)}
+                              className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        )}
+                        {canReport && (
+                          <td className="p-4 text-center whitespace-nowrap">
+                            <button
+                              onClick={() => openReport(item)}
+                              className="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1 rounded transition"
+                            >
+                              Report Damage
+                            </button>
+                          </td>
+                        )}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
         </>
       )}
 
       {/* Add/Edit Equipment Modal */}
       {showForm && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg p-6">
-            <h2 className="text-2xl font-bold mb-6">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg p-5 sm:p-6 max-h-[90vh] overflow-y-auto">
+            <h2 className="text-xl sm:text-2xl font-bold mb-6">
               {editingIndex === null ? "Add Equipment" : "Edit Equipment"}
             </h2>
 
@@ -408,7 +409,7 @@ export default function Equipment() {
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                 className="w-full border rounded-lg p-3"
               />
-              
+
               {/* LABORATORY SELECT DROPDOWN REMOVED FROM VIEW */}
 
               <select
@@ -430,7 +431,7 @@ export default function Equipment() {
               </select>
             </div>
 
-            <div className="flex justify-end gap-3 mt-6">
+            <div className="flex flex-col-reverse sm:flex-row justify-end gap-3 mt-6">
               <button
                 onClick={() => setShowForm(false)}
                 className="px-5 py-2 border rounded-lg hover:bg-gray-100"
@@ -450,10 +451,10 @@ export default function Equipment() {
 
       {/* Report Damage Modal */}
       {showReportModal && reportTarget && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg p-6">
-            <h2 className="text-2xl font-bold mb-2">Report Damage</h2>
-            <p className="text-gray-500 mb-6">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg p-5 sm:p-6 max-h-[90vh] overflow-y-auto">
+            <h2 className="text-xl sm:text-2xl font-bold mb-2">Report Damage</h2>
+            <p className="text-gray-500 mb-6 text-sm sm:text-base">
               {reportTarget.id} - {reportTarget.name}
             </p>
 
@@ -469,7 +470,7 @@ export default function Equipment() {
               disabled={submittingReport}
             />
 
-            <div className="flex justify-end gap-3 mt-6">
+            <div className="flex flex-col-reverse sm:flex-row justify-end gap-3 mt-6">
               <button
                 onClick={() => {
                   setShowReportModal(false);

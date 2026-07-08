@@ -283,13 +283,13 @@ export default function Login() {
                   key={acc.email}
                   type="button"
                   onClick={() => fillDemoAccount(acc.email)}
-                  className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-white hover:shadow-sm transition text-left"
+                  className="w-full flex items-center justify-between gap-2 px-3 py-2 rounded-lg hover:bg-white hover:shadow-sm transition text-left"
                 >
-                  <span className="text-sm text-slate-700">
+                  <span className="text-sm text-slate-700 truncate">
                     {acc.email}
                   </span>
 
-                  <span className="text-xs font-medium text-emerald-600">
+                  <span className="text-xs font-medium text-emerald-600 flex-shrink-0">
                     {acc.role}
                   </span>
                 </button>

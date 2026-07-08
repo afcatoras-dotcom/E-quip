@@ -163,13 +163,13 @@ export default function Maintenance() {
   return (
     <div>
 
-      <div className="mb-8">
+      <div className="mb-6 sm:mb-8">
 
-        <h1 className="text-4xl font-bold">
+        <h1 className="text-2xl sm:text-4xl font-bold">
           Maintenance
         </h1>
 
-        <p className="text-gray-500 mt-2">
+        <p className="text-gray-500 mt-2 text-sm sm:text-base">
           Manage equipment under maintenance.
         </p>
 
@@ -185,8 +185,8 @@ export default function Maintenance() {
 
       <div className="bg-white rounded-xl shadow overflow-hidden mb-8">
 
-        <div className="p-5 border-b">
-          <h2 className="text-xl font-bold">
+        <div className="p-4 sm:p-5 border-b">
+          <h2 className="text-lg sm:text-xl font-bold">
             Reported Issues
           </h2>
 
@@ -195,186 +195,190 @@ export default function Maintenance() {
           </p>
         </div>
 
-        <table className="w-full">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[880px]">
 
-          <thead className="bg-slate-100">
-
-            <tr>
-
-              <th className="p-4 text-left">Equipment</th>
-              <th className="p-4 text-left">Reported By</th>
-              <th className="p-4 text-left">Role</th>
-              <th className="p-4 text-left">Concern</th>
-              <th className="p-4 text-left">Date</th>
-              <th className="p-4 text-left">Status</th>
-              <th className="p-4 text-center">Action</th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            {reports.length === 0 ? (
+            <thead className="bg-slate-100">
 
               <tr>
-                <td colSpan={7} className="text-center py-8 text-gray-500">
-                  No damage reports submitted yet.
-                </td>
+
+                <th className="p-4 text-left">Equipment</th>
+                <th className="p-4 text-left">Reported By</th>
+                <th className="p-4 text-left">Role</th>
+                <th className="p-4 text-left">Concern</th>
+                <th className="p-4 text-left">Date</th>
+                <th className="p-4 text-left">Status</th>
+                <th className="p-4 text-center">Action</th>
+
               </tr>
 
-            ) : (
+            </thead>
 
-              reports.map((report) => (
+            <tbody>
 
-                <tr key={report.id} className="border-t hover:bg-slate-50">
+              {reports.length === 0 ? (
 
-                  <td className="p-4">
-                    {report.equipment?.asset_id} - {report.equipment?.name}
+                <tr>
+                  <td colSpan={7} className="text-center py-8 text-gray-500">
+                    No damage reports submitted yet.
                   </td>
+                </tr>
 
-                  <td className="p-4">
-                    {report.reporter_name}
-                  </td>
+              ) : (
 
-                  <td className="p-4">
-                    {report.reporter_role}
-                  </td>
+                reports.map((report) => (
 
-                  <td className="p-4 max-w-xs">
-                    {report.concern}
-                  </td>
+                  <tr key={report.id} className="border-t hover:bg-slate-50">
 
-                  <td className="p-4">
-                    {new Date(report.created_at).toLocaleDateString()}
-                  </td>
+                    <td className="p-4">
+                      {report.equipment?.asset_id} - {report.equipment?.name}
+                    </td>
 
-                  <td className="p-4">
-                    <span
-                      className={`px-3 py-1 rounded-full text-sm font-semibold ${reportBadge(report.status)}`}
-                    >
-                      {report.status}
-                    </span>
-                  </td>
+                    <td className="p-4">
+                      {report.reporter_name}
+                    </td>
 
-                  <td className="p-4 text-center space-x-2">
+                    <td className="p-4">
+                      {report.reporter_role}
+                    </td>
 
-                    {report.status === "Pending" && (
-                      <button
-                        onClick={() => sendReportToMaintenance(report)}
-                        className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+                    <td className="p-4 max-w-xs">
+                      {report.concern}
+                    </td>
+
+                    <td className="p-4">
+                      {new Date(report.created_at).toLocaleDateString()}
+                    </td>
+
+                    <td className="p-4">
+                      <span
+                        className={`px-3 py-1 rounded-full text-sm font-semibold ${reportBadge(report.status)}`}
                       >
-                        Send to Maintenance
-                      </button>
-                    )}
-
-                    {report.status !== "Resolved" && (
-                      <button
-                        onClick={() => resolveReport(report)}
-                        className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded"
-                      >
-                        Mark Resolved
-                      </button>
-                    )}
-
-                    {report.status === "Resolved" && (
-                      <span className="text-green-600 font-semibold">
-                        Resolved
+                        {report.status}
                       </span>
+                    </td>
+
+                    <td className="p-4 text-center space-x-2 whitespace-nowrap">
+
+                      {report.status === "Pending" && (
+                        <button
+                          onClick={() => sendReportToMaintenance(report)}
+                          className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+                        >
+                          Send to Maintenance
+                        </button>
+                      )}
+
+                      {report.status !== "Resolved" && (
+                        <button
+                          onClick={() => resolveReport(report)}
+                          className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded"
+                        >
+                          Mark Resolved
+                        </button>
+                      )}
+
+                      {report.status === "Resolved" && (
+                        <span className="text-green-600 font-semibold">
+                          Resolved
+                        </span>
+                      )}
+
+                    </td>
+
+                  </tr>
+
+                ))
+
+              )}
+
+            </tbody>
+
+          </table>
+        </div>
+
+      </div>
+
+      <div className="bg-white rounded-xl shadow overflow-hidden">
+
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[760px]">
+
+            <thead className="bg-slate-100">
+
+              <tr>
+
+                <th className="p-4 text-left">Asset ID</th>
+                <th className="p-4 text-left">Equipment</th>
+                <th className="p-4 text-left">Laboratory</th>
+                <th className="p-4 text-left">Condition</th>
+                <th className="p-4 text-left">Status</th>
+                <th className="p-4 text-center">Action</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              {filtered.map((item) => (
+
+                <tr
+                  key={item.id}
+                  className="border-t hover:bg-slate-50"
+                >
+
+                  <td className="p-4">{item.asset_id}</td>
+                  <td className="p-4">{item.name}</td>
+                  <td className="p-4">{item.laboratory}</td>
+                  <td className="p-4">{item.equipment_condition}</td>
+
+                  <td className="p-4">
+
+                    <span
+                      className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                        item.status === "Maintenance"
+                          ? "bg-red-100 text-red-700"
+                          : "bg-green-100 text-green-700"
+                      }`}
+                    >
+                      {item.status}
+                    </span>
+
+                  </td>
+
+                  <td className="p-4 text-center whitespace-nowrap">
+
+                    {item.status === "Maintenance" ? (
+
+                      <button
+                        onClick={() => setAvailable(item.id)}
+                        className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+                      >
+                        Set Available
+                      </button>
+
+                    ) : (
+
+                      <button
+                        onClick={() => setMaintenance(item.id)}
+                        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+                      >
+                        Set Maintenance
+                      </button>
+
                     )}
 
                   </td>
 
                 </tr>
 
-              ))
+              ))}
 
-            )}
+            </tbody>
 
-          </tbody>
-
-        </table>
-
-      </div>
-
-      <div className="bg-white rounded-xl shadow overflow-hidden">
-
-        <table className="w-full">
-
-          <thead className="bg-slate-100">
-
-            <tr>
-
-              <th className="p-4 text-left">Asset ID</th>
-              <th className="p-4 text-left">Equipment</th>
-              <th className="p-4 text-left">Laboratory</th>
-              <th className="p-4 text-left">Condition</th>
-              <th className="p-4 text-left">Status</th>
-              <th className="p-4 text-center">Action</th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            {filtered.map((item) => (
-
-              <tr
-                key={item.id}
-                className="border-t hover:bg-slate-50"
-              >
-
-                <td className="p-4">{item.asset_id}</td>
-                <td className="p-4">{item.name}</td>
-                <td className="p-4">{item.laboratory}</td>
-                <td className="p-4">{item.equipment_condition}</td>
-
-                <td className="p-4">
-
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                      item.status === "Maintenance"
-                        ? "bg-red-100 text-red-700"
-                        : "bg-green-100 text-green-700"
-                    }`}
-                  >
-                    {item.status}
-                  </span>
-
-                </td>
-
-                <td className="p-4 text-center">
-
-                  {item.status === "Maintenance" ? (
-
-                    <button
-                      onClick={() => setAvailable(item.id)}
-                      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
-                    >
-                      Set Available
-                    </button>
-
-                  ) : (
-
-                    <button
-                      onClick={() => setMaintenance(item.id)}
-                      className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
-                    >
-                      Set Maintenance
-                    </button>
-
-                  )}
-
-                </td>
-
-              </tr>
-
-            ))}
-
-          </tbody>
-
-        </table>
+          </table>
+        </div>
 
       </div>
 

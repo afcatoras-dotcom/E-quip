@@ -55,13 +55,13 @@ export default function Returns() {
   return (
     <div>
 
-      <div className="mb-8">
+      <div className="mb-6 sm:mb-8">
 
-        <h1 className="text-4xl font-bold">
+        <h1 className="text-2xl sm:text-4xl font-bold">
           Returned Equipment
         </h1>
 
-        <p className="text-gray-500 mt-2">
+        <p className="text-gray-500 mt-2 text-sm sm:text-base">
           View all completed equipment returns.
         </p>
 
@@ -77,92 +77,94 @@ export default function Returns() {
 
       <div className="bg-white rounded-xl shadow overflow-hidden">
 
-        <table className="w-full">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[880px]">
 
-          <thead className="bg-slate-100">
-
-            <tr>
-
-              <th className="p-4 text-left">Student</th>
-              <th className="p-4 text-left">Student ID</th>
-              <th className="p-4 text-left">Equipment</th>
-              <th className="p-4 text-left">Laboratory</th>
-              <th className="p-4 text-left">Quantity</th>
-              <th className="p-4 text-left">Borrow Date</th>
-              <th className="p-4 text-left">Return Date</th>
-              <th className="p-4 text-left">Status</th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            {filtered.length === 0 ? (
+            <thead className="bg-slate-100">
 
               <tr>
 
-                <td
-                  colSpan={8}
-                  className="text-center py-8 text-gray-500"
-                >
-                  No returned equipment found.
-                </td>
+                <th className="p-4 text-left">Student</th>
+                <th className="p-4 text-left">Student ID</th>
+                <th className="p-4 text-left">Equipment</th>
+                <th className="p-4 text-left">Laboratory</th>
+                <th className="p-4 text-left">Quantity</th>
+                <th className="p-4 text-left">Borrow Date</th>
+                <th className="p-4 text-left">Return Date</th>
+                <th className="p-4 text-left">Status</th>
 
               </tr>
 
-            ) : (
+            </thead>
 
-              filtered.map((item) => (
+            <tbody>
 
-                <tr
-                  key={item.id}
-                  className="border-t hover:bg-slate-50"
-                >
+              {filtered.length === 0 ? (
 
-                  <td className="p-4">
-                    {item.student_name}
-                  </td>
+                <tr>
 
-                  <td className="p-4">
-                    {item.student_id}
-                  </td>
-
-                  <td className="p-4">
-                    {item.equipment?.asset_id} - {item.equipment?.name}
-                  </td>
-
-                  <td className="p-4">
-                    {item.equipment?.laboratory}
-                  </td>
-
-                  <td className="p-4">
-                    {item.quantity}
-                  </td>
-
-                  <td className="p-4">
-                    {item.borrow_date}
-                  </td>
-
-                  <td className="p-4">
-                    {item.return_date}
-                  </td>
-
-                  <td className="p-4">
-                    <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
-                      Returned
-                    </span>
+                  <td
+                    colSpan={8}
+                    className="text-center py-8 text-gray-500"
+                  >
+                    No returned equipment found.
                   </td>
 
                 </tr>
 
-              ))
+              ) : (
 
-            )}
+                filtered.map((item) => (
 
-          </tbody>
+                  <tr
+                    key={item.id}
+                    className="border-t hover:bg-slate-50"
+                  >
 
-        </table>
+                    <td className="p-4">
+                      {item.student_name}
+                    </td>
+
+                    <td className="p-4">
+                      {item.student_id}
+                    </td>
+
+                    <td className="p-4">
+                      {item.equipment?.asset_id} - {item.equipment?.name}
+                    </td>
+
+                    <td className="p-4">
+                      {item.equipment?.laboratory}
+                    </td>
+
+                    <td className="p-4">
+                      {item.quantity}
+                    </td>
+
+                    <td className="p-4">
+                      {item.borrow_date}
+                    </td>
+
+                    <td className="p-4">
+                      {item.return_date}
+                    </td>
+
+                    <td className="p-4">
+                      <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
+                        Returned
+                      </span>
+                    </td>
+
+                  </tr>
+
+                ))
+
+              )}
+
+            </tbody>
+
+          </table>
+        </div>
 
       </div>
 

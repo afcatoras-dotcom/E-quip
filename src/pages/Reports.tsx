@@ -62,49 +62,49 @@ export default function Reports() {
   return (
     <div>
 
-      <div className="mb-8">
+      <div className="mb-6 sm:mb-8">
 
-        <h1 className="text-4xl font-bold">
+        <h1 className="text-2xl sm:text-4xl font-bold">
           Reports
         </h1>
 
-        <p className="text-gray-500 mt-2">
+        <p className="text-gray-500 mt-2 text-sm sm:text-base">
           Equipment statistics and analytics.
         </p>
 
       </div>
 
-      <div className="grid md:grid-cols-5 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4 mb-8">
 
-        <div className="bg-white rounded-xl shadow p-5">
-          <p className="text-gray-500">Total Equipment</p>
-          <h2 className="text-3xl font-bold">{summary.total}</h2>
+        <div className="bg-white rounded-xl shadow p-4 sm:p-5">
+          <p className="text-gray-500 text-xs sm:text-base">Total Equipment</p>
+          <h2 className="text-2xl sm:text-3xl font-bold">{summary.total}</h2>
         </div>
 
-        <div className="bg-white rounded-xl shadow p-5">
-          <p className="text-gray-500">Available</p>
-          <h2 className="text-3xl font-bold text-green-600">
+        <div className="bg-white rounded-xl shadow p-4 sm:p-5">
+          <p className="text-gray-500 text-xs sm:text-base">Available</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-green-600">
             {summary.available}
           </h2>
         </div>
 
-        <div className="bg-white rounded-xl shadow p-5">
-          <p className="text-gray-500">Borrowed</p>
-          <h2 className="text-3xl font-bold text-yellow-500">
+        <div className="bg-white rounded-xl shadow p-4 sm:p-5">
+          <p className="text-gray-500 text-xs sm:text-base">Borrowed</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-yellow-500">
             {summary.borrowed}
           </h2>
         </div>
 
-        <div className="bg-white rounded-xl shadow p-5">
-          <p className="text-gray-500">Maintenance</p>
-          <h2 className="text-3xl font-bold text-red-500">
+        <div className="bg-white rounded-xl shadow p-4 sm:p-5">
+          <p className="text-gray-500 text-xs sm:text-base">Maintenance</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-red-500">
             {summary.maintenance}
           </h2>
         </div>
 
-        <div className="bg-white rounded-xl shadow p-5">
-          <p className="text-gray-500">Returned</p>
-          <h2 className="text-3xl font-bold text-blue-600">
+        <div className="bg-white rounded-xl shadow p-4 sm:p-5 col-span-2 sm:col-span-1">
+          <p className="text-gray-500 text-xs sm:text-base">Returned</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-blue-600">
             {summary.returned}
           </h2>
         </div>
@@ -113,23 +113,24 @@ export default function Reports() {
 
       <div className="grid lg:grid-cols-2 gap-6">
 
-        <div className="bg-white rounded-xl shadow p-6">
+        <div className="bg-white rounded-xl shadow p-4 sm:p-6">
 
-          <h2 className="text-xl font-bold mb-4">
+          <h2 className="text-lg sm:text-xl font-bold mb-4">
             Equipment Status
           </h2>
 
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={280}>
             <PieChart>
 
               <Pie
                 data={pieData}
                 dataKey="value"
                 nameKey="name"
-                outerRadius={100}
+                outerRadius={90}
                 label
               >
-                    {pieData.map((_, index) => (                  <Cell
+                {pieData.map((_, index) => (
+                  <Cell
                     key={index}
                     fill={colors[index % colors.length]}
                   />
@@ -143,13 +144,13 @@ export default function Reports() {
 
         </div>
 
-        <div className="bg-white rounded-xl shadow p-6">
+        <div className="bg-white rounded-xl shadow p-4 sm:p-6">
 
-          <h2 className="text-xl font-bold mb-4">
+          <h2 className="text-lg sm:text-xl font-bold mb-4">
             Inventory Overview
           </h2>
 
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={280}>
 
             <BarChart data={barData}>
 

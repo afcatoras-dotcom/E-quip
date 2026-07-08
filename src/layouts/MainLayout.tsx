@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 
@@ -10,11 +11,15 @@ import {
   FileBarChart2,
   LogOut,
   UserCircle,
+  Menu,
+  X,
 } from "lucide-react";
 
 export default function MainLayout() {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const storedUser = localStorage.getItem("user");
   const currentUser = storedUser ? JSON.parse(storedUser) : null;
@@ -22,6 +27,13 @@ export default function MainLayout() {
   const today = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  // Shorter date for narrow screens so the top bar never wraps awkwardly.
+  const todayShort = new Date().toLocaleDateString("en-US", {
+    month: "short",
     day: "numeric",
     year: "numeric",
   });
@@ -75,32 +87,67 @@ export default function MainLayout() {
     (item) => item.path === location.pathname
   );
 
+  function goTo(path: string) {
+    navigate(path);
+    setMobileMenuOpen(false);
+  }
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    localStorage.removeItem("user");
+    navigate("/");
+  }
+
   return (
     <div className="flex min-h-screen bg-slate-100">
 
-      {/* Sidebar */}
+      {/* Mobile backdrop, closes the drawer on tap */}
+      {mobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
 
-      <aside className="w-72 flex-shrink-0 bg-white shadow-xl flex flex-col sticky top-0 h-screen overflow-y-auto">
+      {/* Sidebar — fixed off-canvas drawer on mobile, sticky column on desktop */}
+      <aside
+        className={`w-72 flex-shrink-0 bg-white shadow-xl flex flex-col fixed lg:sticky top-0 h-screen overflow-y-auto z-50
+          transition-transform duration-300 ease-in-out
+          ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
+      >
 
-        <div className="p-6 border-b">
+        <div className="p-6 border-b flex items-start justify-between gap-2">
 
-          <h1 className="text-3xl font-bold text-emerald-600">
-            E-quip
-          </h1>
+          <div className="min-w-0">
+            <h1 className="text-3xl font-bold text-emerald-600">
+              E-quip
+            </h1>
 
-          <p className="text-sm text-gray-500 mt-2 leading-5">
-            Campus Laboratory Equipment Monitoring System
-          </p>
+            <p className="text-sm text-gray-500 mt-2 leading-5">
+              Campus Laboratory Equipment Monitoring System
+            </p>
+          </div>
 
-          <div className="mt-4 pt-4 border-t flex items-center gap-3">
+          <button
+            onClick={() => setMobileMenuOpen(false)}
+            className="lg:hidden flex-shrink-0 -mr-2 -mt-1 p-2 text-slate-400 hover:text-slate-600"
+            aria-label="Close menu"
+          >
+            <X size={22} />
+          </button>
+
+        </div>
+
+        <div className="px-6 pt-4 border-b pb-4">
+          <div className="flex items-center gap-3">
 
             <UserCircle
               size={32}
               className="text-emerald-600 flex-shrink-0"
             />
 
-            <div>
-              <p className="font-semibold text-slate-800 leading-tight">
+            <div className="min-w-0">
+              <p className="font-semibold text-slate-800 leading-tight truncate">
                 {currentUser?.full_name || "User"}
               </p>
 
@@ -110,7 +157,6 @@ export default function MainLayout() {
             </div>
 
           </div>
-
         </div>
 
         <nav className="flex-1 p-4">
@@ -119,7 +165,7 @@ export default function MainLayout() {
 
             <button
               key={item.path}
-              onClick={() => navigate(item.path)}
+              onClick={() => goTo(item.path)}
               className={`flex items-center gap-3 w-full p-3 rounded-xl mb-2 transition-all duration-200
                 ${
                   location.pathname === item.path
@@ -140,11 +186,7 @@ export default function MainLayout() {
         <div className="p-4 border-t">
 
           <button
-            onClick={async () => {
-              await supabase.auth.signOut();
-              localStorage.removeItem("user");
-              navigate("/");
-            }}
+            onClick={handleLogout}
             className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white p-3 rounded-xl transition shadow-md shadow-rose-900/10"
           >
             <LogOut size={18} />
@@ -156,27 +198,35 @@ export default function MainLayout() {
       </aside>
 
       {/* Main Content */}
-
-      <main className="flex-1 min-w-0 p-8">
+      <main className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8">
 
         {/* Top Navbar */}
+        <div className="bg-white rounded-xl shadow p-4 sm:p-5 mb-6 flex items-center gap-3">
 
-        <div className="bg-white rounded-xl shadow p-5 mb-6">
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="lg:hidden flex-shrink-0 p-2 -ml-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100"
+            aria-label="Open menu"
+          >
+            <Menu size={22} />
+          </button>
 
-          <h2 className="text-2xl font-bold text-slate-800">
-            {isDashboard
-              ? `Welcome, ${currentUser?.full_name || "User"} 👋`
-              : currentPage?.name || ""}
-          </h2>
+          <div className="min-w-0">
+            <h2 className="text-lg sm:text-2xl font-bold text-slate-800 truncate">
+              {isDashboard
+                ? `Welcome, ${currentUser?.full_name || "User"} 👋`
+                : currentPage?.name || ""}
+            </h2>
 
-          <p className="text-gray-500">
-            {today}
-          </p>
+            <p className="text-gray-500 text-xs sm:text-sm">
+              <span className="hidden sm:inline">{today}</span>
+              <span className="sm:hidden">{todayShort}</span>
+            </p>
+          </div>
 
         </div>
 
         {/* Page Content */}
-
         <Outlet />
 
       </main>

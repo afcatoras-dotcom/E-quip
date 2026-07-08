@@ -214,25 +214,25 @@ export default function Dashboard() {
     {
       title: "Total Equipment",
       value: totalEquipment,
-      icon: <Package size={26} />,
+      icon: <Package size={22} />,
       gradient: "from-blue-500 to-blue-600",
     },
     {
       title: "Available",
       value: available,
-      icon: <CheckCircle size={26} />,
+      icon: <CheckCircle size={22} />,
       gradient: "from-emerald-500 to-emerald-600",
     },
     {
       title: "Borrowed",
       value: borrowed,
-      icon: <ClipboardList size={26} />,
+      icon: <ClipboardList size={22} />,
       gradient: "from-amber-400 to-amber-500",
     },
     {
       title: "Maintenance",
       value: maintenance,
-      icon: <Wrench size={26} />,
+      icon: <Wrench size={22} />,
       gradient: "from-rose-500 to-rose-600",
     },
   ];
@@ -255,24 +255,24 @@ export default function Dashboard() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-slate-800">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-4xl font-bold text-slate-800">
           Dashboard
         </h1>
 
-        <p className="text-gray-500 mt-2">
+        <p className="text-gray-500 mt-2 text-sm sm:text-base">
           Monitor laboratory equipment, borrowing activities, and maintenance records.
         </p>
       </div>
 
       <div
-        className={`grid gap-5 mb-8 ${isStaff ? "md:grid-cols-4" : "md:grid-cols-3"}`}
+        className={`grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-8 ${isStaff ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}
       >
 
         {!isStaff && (
           <button
             onClick={() => setShowReportModal(true)}
-            className="bg-gradient-to-br from-amber-500 to-orange-600 text-white p-5 rounded-xl hover:from-amber-600 hover:to-orange-700 transition shadow-md flex items-center justify-center gap-2"
+            className="bg-gradient-to-br from-amber-500 to-orange-600 text-white p-4 sm:p-5 rounded-xl hover:from-amber-600 hover:to-orange-700 transition shadow-md flex items-center justify-center gap-2 text-sm sm:text-base"
           >
             <AlertTriangle size={18} />
             Report Damaged Equipment
@@ -282,7 +282,7 @@ export default function Dashboard() {
         {isStaff && (
           <button
             onClick={() => navigate("/equipment")}
-            className="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white p-5 rounded-xl hover:from-emerald-600 hover:to-emerald-700 transition shadow-md"
+            className="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white p-4 sm:p-5 rounded-xl hover:from-emerald-600 hover:to-emerald-700 transition shadow-md text-sm sm:text-base"
           >
             + Add Equipment
           </button>
@@ -290,14 +290,14 @@ export default function Dashboard() {
 
         <button
           onClick={() => navigate("/borrowing")}
-          className="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-5 rounded-xl hover:from-blue-600 hover:to-blue-700 transition shadow-md"
+          className="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-4 sm:p-5 rounded-xl hover:from-blue-600 hover:to-blue-700 transition shadow-md text-sm sm:text-base"
         >
           + Borrow Equipment
         </button>
 
         <button
           onClick={() => navigate("/returns")}
-          className="bg-gradient-to-br from-amber-400 to-amber-500 text-white p-5 rounded-xl hover:from-amber-500 hover:to-amber-600 transition shadow-md"
+          className="bg-gradient-to-br from-amber-400 to-amber-500 text-white p-4 sm:p-5 rounded-xl hover:from-amber-500 hover:to-amber-600 transition shadow-md text-sm sm:text-base"
         >
           + Return Equipment
         </button>
@@ -305,7 +305,7 @@ export default function Dashboard() {
         {isStaff && (
           <button
             onClick={() => navigate("/maintenance")}
-            className="bg-gradient-to-br from-rose-500 to-rose-600 text-white p-5 rounded-xl hover:from-rose-600 hover:to-rose-700 transition shadow-md"
+            className="bg-gradient-to-br from-rose-500 to-rose-600 text-white p-4 sm:p-5 rounded-xl hover:from-rose-600 hover:to-rose-700 transition shadow-md text-sm sm:text-base"
           >
             + Maintenance
           </button>
@@ -313,24 +313,24 @@ export default function Dashboard() {
 
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-6">
         {stats.map((item) => (
           <div
             key={item.title}
-            className="bg-white rounded-2xl shadow p-6 flex justify-between items-center"
+            className="bg-white rounded-2xl shadow p-4 sm:p-6 flex justify-between items-center"
           >
-            <div>
-              <p className="text-gray-500">
+            <div className="min-w-0">
+              <p className="text-gray-500 text-xs sm:text-base truncate">
                 {item.title}
               </p>
 
-              <h2 className="text-4xl font-bold mt-3">
+              <h2 className="text-2xl sm:text-4xl font-bold mt-1 sm:mt-3">
                 {loading ? "..." : item.value}
               </h2>
             </div>
 
             <div
-              className={`bg-gradient-to-br ${item.gradient} p-4 rounded-xl text-white shadow-md`}
+              className={`bg-gradient-to-br ${item.gradient} p-2.5 sm:p-4 rounded-xl text-white shadow-md flex-shrink-0 ml-2`}
             >
               {item.icon}
             </div>
@@ -340,9 +340,9 @@ export default function Dashboard() {
 
       <div className="grid lg:grid-cols-2 gap-6 mt-8">
 
-        <div className="bg-white rounded-2xl shadow p-6">
+        <div className="bg-white rounded-2xl shadow p-5 sm:p-6">
 
-          <h2 className="text-2xl font-bold mb-4">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4">
             Computer Engineering Laboratory
           </h2>
 
@@ -378,9 +378,9 @@ export default function Dashboard() {
 
         </div>
 
-        <div className="bg-white rounded-2xl shadow p-6">
+        <div className="bg-white rounded-2xl shadow p-5 sm:p-6">
 
-          <h2 className="text-2xl font-bold mb-4">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4">
             EE / ECE Laboratory
           </h2>
 
@@ -418,9 +418,9 @@ export default function Dashboard() {
 
       </div>
 
-      <div className="bg-white rounded-2xl shadow mt-8 p-6">
+      <div className="bg-white rounded-2xl shadow mt-8 p-4 sm:p-6">
 
-        <h2 className="text-2xl font-bold mb-4">
+        <h2 className="text-xl sm:text-2xl font-bold mb-4">
           Recent Borrowing Activity
         </h2>
 
@@ -433,8 +433,8 @@ export default function Dashboard() {
             No borrowing records yet.
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
+          <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+            <table className="w-full text-left min-w-[560px]">
               <thead>
                 <tr className="text-gray-500 border-b">
                   <th className="pb-2 pr-4">Student</th>
@@ -483,15 +483,15 @@ export default function Dashboard() {
       {/* Report Damaged Equipment Modal */}
 
       {showReportModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
 
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg p-6">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg p-5 sm:p-6 max-h-[90vh] overflow-y-auto">
 
-            <h2 className="text-2xl font-bold mb-2">
+            <h2 className="text-xl sm:text-2xl font-bold mb-2">
               Report Damaged Equipment
             </h2>
 
-            <p className="text-gray-500 mb-6">
+            <p className="text-gray-500 mb-6 text-sm sm:text-base">
               Let lab staff know something needs attention.
             </p>
 
@@ -527,7 +527,7 @@ export default function Dashboard() {
               disabled={submittingReport}
             />
 
-            <div className="flex justify-end gap-3 mt-6">
+            <div className="flex flex-col-reverse sm:flex-row justify-end gap-3 mt-6">
 
               <button
                 onClick={() => {
