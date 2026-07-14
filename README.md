@@ -1,75 +1,184 @@
-# React + TypeScript + Vite
+# E-quip
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Campus Laboratory Equipment Monitoring System**
 
-Currently, two official plugins are available:
+E-quip is a web-based laboratory equipment monitoring and management system developed for the Computer Engineering and Electronics/Electrical Engineering laboratories of FEU Institute of Technology. The system streamlines equipment inventory, borrowing and returns, maintenance tracking, user management, and reporting through a centralized platform with role-based access control.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Secure user authentication
+- Role-based access control
+- Equipment inventory management
+- Equipment borrowing and returns
+- Maintenance monitoring
+- User management
+- Inventory analytics and reports
+- Laboratory suggestion box
+- Responsive modern interface
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Technologies Used
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Frontend
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router DOM
+- Lucide React
+- Recharts
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Backend
+- Supabase
+- PostgreSQL
+- Supabase Authentication
+- Row Level Security (RLS)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Deployment
+- GitHub
+- Vercel
 
+---
+
+## User Roles
+
+| Role | Permissions |
+|------|-------------|
+| **Administrator** | Full system access including user management, reports, equipment, maintenance, borrowing, and returns. |
+| **Laboratory Technician** | Equipment management, borrowing, returns, maintenance, and reports. |
+| **Faculty** | Borrow and return own equipment, view inventory, and submit suggestions. |
+| **Student** | Borrow and return own equipment, view inventory, and submit suggestions. |
+
+---
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/afcatoras-dotcom/E-quip.git
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Navigate to the project folder:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+cd E-quip
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create a `.env` file:
+
+```env
+VITE_SUPABASE_URL=YOUR_SUPABASE_URL
+VITE_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
+```
+
+Run the development server:
+
+```bash
+npm run dev
+```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+---
+
+## Project Structure
 
 ```
+E-quip
+│
+├── src
+│   ├── components
+│   ├── layouts
+│   ├── pages
+│   ├── routes
+│   ├── lib
+│   └── assets
+│
+├── public
+├── package.json
+├── vite.config.ts
+└── README.md
+```
+
+---
+
+## Modules
+
+- Login
+- Dashboard
+- Equipment Management
+- Borrowing
+- Returns
+- Maintenance
+- Reports
+- User Management
+- Suggestions
+- Settings
+
+---
+
+## Developers
+
+### Angelbert F. Catoras
+**Lead Developer**
+- Full Stack Development
+- Database Design
+- Authentication
+- Deployment
+- UI/UX Design
+- Presentation
+- Project Initiation
+
+### Denyce Maryll F. Soria
+- PowerPoint Presentation
+- Quality Assurance
+- Video Presentation
+- Project Initiation
+
+### Arnold Brian Eustaquio
+- Database
+- Documentation
+- Presentation
+- Quality Assurance
+
+### Diosdado Jr. Bancoro
+- Database
+- Presentation
+
+### Raenard Christ B. Ensorio
+- Presentation
+
+### Marc Justine Esquivel
+- Presentation
+
+---
+
+## Developed For
+
+**FEU Institute of Technology**
+
+Bachelor of Science in Computer Engineering
+
+Software Design Project
+
+Academic Year 2025–2026
+
+---
+
+## License
+
+This project was developed for academic purposes as part of the Software Design course at FEU Institute of Technology.
